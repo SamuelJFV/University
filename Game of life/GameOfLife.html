@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+<title> Game of life </title>
+<link rel="icon" href="http://game-of-life.daneaiulian.com/images/life/still/block.png">
+
+</head>
+
+<body>
+
+<canvas id="mainCanvas" height="600" width ="600"></canvas>
+
+<script>
+
+var time = 0;
+var alive = 0;
+var cellArray = [];
+var newCellArray =[];
+var cellFood = [];
+var food = 0;
+var timeIsOn = false;
+var speed = 250;
+
+window.onload = function()
+	{
+	gameCanvas=document.getElementById("mainCanvas");
+	WindowCanvas();
+
+	setInterval(Main,speed);
+
+	gameCanvas.addEventListener("mousedown",MouseClick,false);
+	SetCellsValueToFalse();
+	SetCellsFoodToZero();
+	}
+
+
+function WindowCanvas()
+	{
+	//background
+	ctx = gameCanvas.getContext("2d");
+	ctx.fillStyle = "gray";
+	ctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+
+	//grid
+	ctx.fillStyle = "black";
+	for(gridX = 0; gridX < 61; gridX++)
+		{
+		for(gridY = 0; gridY < 61; gridY++)
+			{
+			ctx.fillRect(gridX*10-9,gridY*10-9,9,9);
+			}
+		}
+	}
+
+
+function Main()
+	{
+	if (timeIsOn)
+		{
+		time++;
+		document.getElementById("timer").innerHTML = time;
+		document.getElementById("alive").innerHTML = alive;
+		cellArray = newCellArray;
+		SetCellsFoodToZero();
+
+		for(i = 0 ; i < 3600 ; i++)
+			{
+			FoodCount();
+			}
+
+		for(i = 0 ; i < 3600 ; i++)
+			{
+			IsAliveOrDead();
+			}
+		}
+	}
+
+	
+function FoodCount()
+	{
+	for (j = -2 ; j < 1; j++)
+		{
+		for (k = -1 ; k < 2 ; k++)
+			{
+			if ((cellArray[i + j + k*60 + 1] == true) && !((j == -1) && (k == 0)))
+				{
+				cellFood[i] += 1;
+				}
+			}
+		}
+	}
+
+
+function IsAliveOrDead()
+	{
+	if (cellArray[i])
+		{
+		if ((cellFood[i] >= 4) || (cellFood[i] <= 1))
+			{
+			alive--;
+			newCellArray[i] = false;
+			ctx.fillStyle = "black";
+			Draw();
+			}
+		}
+	else
+		{
+		if (cellFood[i] == 3)
+			{
+			alive++;
+			newCellArray[i] = true;
+			ctx.fillStyle = "lime";
+			Draw();
+			}
+		}
+	}
+
+
+function Draw()
+	{
+	px = 0;
+	py = 0;
+	for (m = 60; m >= 0 ; m--)
+		{
+		if (i >= m*60)
+			{
+			py = (m+1)*10;
+			px = ((i-m*60)+1)*10
+			ctx.fillRect(px-9,py-9,9,9);
+			return;
+			}
+		}
+	}
+
+
+function MouseClick(event)
+	{
+	mouseX = event.pageX;
+	mouseY = event.pageY;
+
+	for(i = 0; i < 61; i++)
+		{
+		if (mouseX/10 > i)
+			{
+			indexX = i-1;
+			px = i*10;
+			boolX = false;
+			}
+		if (mouseY/10 > i)
+			{
+			indexY = i-1;
+			py= i*10;
+			boolY = false;
+			}
+		}
+	index = indexX + indexY*60;
+	if (newCellArray[index] == false)
+		{
+		alive++;
+		newCellArray[index] = true;
+		ctx.fillStyle = "lime"; 
+		}
+	else
+		{
+		alive--;
+		newCellArray[index] = false;
+		ctx.fillStyle = "black";
+		}
+	ctx.fillRect(px-9,py-9,9,9);
+	
+
+	}
+
+
+function SetCellsValueToFalse()
+	{
+	for(i = 0 ; i < 3600 ; i++)
+		{
+		newCellArray[i] = false;
+		}
+	}
+
+
+function SetCellsFoodToZero()
+	{
+	for(i = 0 ; i < 3600 ; i++)
+		{
+		cellFood[i] = 0;
+		}
+	}
+
+
+function timeStatus()
+	{
+	timeIsOn = !timeIsOn;
+	}
+
+
+function timeUp()
+	{
+	speed = speed*0.5;
+	}
+
+
+function timeDown()
+	{
+	speed = speed*2;
+	}
+
+
+</script>
+
+<table>
+<tr>
+	<th> Time </th>
+	<th> Alive Cells </th>
+	<th>   </th>
+</tr>
+<tr>
+	<td><center><p id = timer>0</p></center></td>
+	<td><center><p id = alive>0</p></center></td>
+	<td><button type = "button" onClick = "timeStatus()">Start/Pause</button></td>
+</tr>
+
+</table>
+
+</body>
+
+</html>
