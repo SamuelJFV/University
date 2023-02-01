@@ -1,6 +1,6 @@
 # These projects were made during my time in university
 
-# Projects:
+## Projects:
 
 Conway's Game of Life (a cellular automaton) in Javascript and HTML.
 
