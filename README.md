@@ -2,8 +2,8 @@
 
 ## Projects:
 
-Conway's Game of Life (a cellular automaton) in Javascript and HTML.
+1) Conway's Game of Life (a cellular automaton) in Javascript and HTML.
 
-A library to create and visualize structures of graphs in Python to solve a maximum matching problem.
+2) A library to create and visualize structures of graphs in Python to solve a maximum matching problem.
 
-A very robust Python script where it is possible to train a simple deep neural network to recognize hand-written number digits.
+3) A very robust Python script where it is possible to train a simple deep neural network to recognize hand-written number digits.
