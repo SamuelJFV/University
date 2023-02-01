@@ -2,6 +2,6 @@
 
 # Projects:
 
-Conway's Game of Life (a cellular automaton) in Javascript.
+Conway's Game of Life (a cellular automaton) in Javascript and HTML.
 
 A library to create and visualize structures of graphs in Python to solve a maximum matching problem.
